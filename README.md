@@ -38,9 +38,9 @@ In order for python to use gdal, some system variables need to be condigured for
 
 ```python
 def setupgdal():
-	gdal_path = "C:\\Program Files (x86)\\GDAL"
-	if not os.path.isdir(gdal_path):
-	        print("GDAL not found on system at {0}".format(gdal_path))
+	GDAL_PATH = "C:\\Program Files (x86)\\GDAL"
+	if not os.path.isdir(GDAL_PATH):
+	        print("GDAL not found on system at {0}".format(GDAL_PATH))
 		return False
 	_environ = dict(os.environ)
 	_environ["PATH"] = "{0};{1}".format(GDAL_PATH, _environ["PATH"])
@@ -50,8 +50,9 @@ def setupgdal():
 	os.environ.update(_environ)
 	try:
         import gdal
-       		log_info("GDAL load success [Version: {0}]".format(gdal.VersionInfo('VERSION_NUM')))
+		log_info("GDAL load success [Version: {0}]".format(gdal.VersionInfo('VERSION_NUM')))
 		return True
 	except ImportError:
 		print("GDAL Import Failed")
-		return False```
+		return False
+```
