@@ -1,7 +1,7 @@
 # ArcPy-GDAL
 
 Installing GDAL for ArcPy on Windows. GDAL can be difficult to configure for use within ArcPy, but it can be setup without too much trouble. You must use a 32bit installation matched to your Python Archetecture. Your ArcPy script also needs to reference the 32bit installation explicitly, and have the correct libraries installed.
- 
+
 The later of these points causes the most headaches. Often, users will have an 64 bit instance of GDAL installed on their system for PostGIS, QGis or other software where paths to GDAL are referenced in the systems Path. When referenced in the system path, ArcPy will use the system referenced GDAL version and will ultimatly fail with a dll error. The safest way to access the library is to setup your ArcPy environment to reference the correct files.
 
 The steps are outlined below to get it working.
@@ -37,10 +37,12 @@ Install GDAL-{gdal_version}.{arch}-py2.7.msi, selecting the ArcGIS Python instal
 In order for python to use gdal, some system variables need to be condigured for the instance of python.
 
 ```python
+import os
+
 def setupgdal():
 	GDAL_PATH = "C:\\Program Files (x86)\\GDAL"
 	if not os.path.isdir(GDAL_PATH):
-	        print("GDAL not found on system at {0}".format(GDAL_PATH))
+		print("GDAL not found on system at {0}".format(GDAL_PATH))
 		return False
 	_environ = dict(os.environ)
 	_environ["PATH"] = "{0};{1}".format(GDAL_PATH, _environ["PATH"])
@@ -49,8 +51,8 @@ def setupgdal():
 	os.environ.clear()
 	os.environ.update(_environ)
 	try:
-        import gdal
-		log_info("GDAL load success [Version: {0}]".format(gdal.VersionInfo('VERSION_NUM')))
+		import gdal
+		print("GDAL load success [Version: {0}]".format(gdal.VersionInfo('VERSION_NUM')))
 		return True
 	except ImportError:
 		print("GDAL Import Failed")
